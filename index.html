@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#A6192E"><title>FCN 羅盤</title>
+<!DOCTYPE html>
+<!-- FCN 羅盤 NAVIGATOR · 南區　設計與開發：王崇禮 FC（Charlton）　© 2026 王崇禮. All rights reserved. -->
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="author" content="王崇禮 (Charlton)"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#A6192E"><title>FCN 羅盤</title>
 <style>
 :root{--red:#A6192E;--ink:#23262F;--bg:#F4F2EE;--line:#E3DFD8;--soft:#7B7F8A}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -43,33 +45,33 @@ const RAW=[
 ["FCN11505S022","260507",.025075,.55,"260515,260615,260618,1.05;260616,260714,260717,.97;260715,260814,260819,.89;260817,260914,260917,.81;260915,261014,261019,.73;261015,261116,261119,.65","TSM:415.7083,CRWV:129.5124,LITE:884.2089","260817"],
 ["FCN11505S030","260512",.027983,.60,"260520,260622,260625,1.05;260623,260720,260723,.95;260721,260819,260824,.85","TSM:393.9824,ARM:207.0296,LITE:999.1431","260804"],
 ["FCN11506S008","260602",.020325,.55,"260610,260709,260714,1.05;260710,260810,260813,.95;260811,260909,260914,.85;260910,261009,261015,.75;261012,261109,261113,.65;261110,261209,261214,.55","TSM:443.2534,LITE:997.7606,PLTR:153.4614","260812"],
-["FCN11506S013","260603",.025517,.55,"260610,260710,260715,0;260713,260810,260813,0;260811,260910,260915,1;260911,261012,261015,1;261013,261110,261116,1","ARM:411.83,INTC:112.71,AMD:542.52"],
+["FCN11506S013","260603",.025517,.55,"260610,260710,260715,0;260713,260810,260813,0;260811,260910,260915,1;260911,261012,261015,1;261013,261110,261116,1","ARM:411.83:267.6895,INTC:112.71:73.2615,AMD:542.52:352.638"],
 ["FCN11507S028","260715",.041117,.70,"260723,260824,260827,1;260825,260922,260925,.9;260923,261022,261027,.8","NVDA:210.3082,INTC:103.0445,MU:912.2967","260904"],
 ["FCN11507S031","260722",.028683,.70,"260730,260831,260903,1;260901,260929,261002,.9;260930,261029,261103,.8","TSM:420.0433,NVDA:211.2508,GLW:157.1277","260901"],
-["FCN11508S001","260805",.0359,.70,"260813,260914,260917,1.05;260915,261012,261015,.95;261013,261112,261117,.85","NVDA:220.0159,GLW:158.1905,MU:910.8999","260921"],
-["FCN11508S004","260807",.023542,.7,"260817,260914,260917,1.15;260915,261014,261019,1.1;261015,261116,261119,1.05;261117,261214,261217,1;261215,270114,270120,.95;270115,270216,270219,.9","NVDA:222.9163,GOOG:354.5262,AVGO:426.5697,LITE:890.4446"],
-["FCN11508S006","260807",.037283,.6,"260817,260914,260917,0;260915,261014,261019,1.1;261015,261116,261119,1","TSM:419.8239,NVDA:222.9163,NBIS:186.7015"],
-["FCN11508S008","260810",.019358,.7,"260818,260917,260922,1.05;260918,261019,261022,1.05;261020,261117,261120,1.05;261118,261217,261222,1.05;261218,270119,270122,1.05;270120,270217,270222,1.05","NVDA:219.6686,GOOG:353.8782,INTC:98.0847"],
-["FCN11508S009","260812",.01525,.7,"260819,260921,260924,1;260922,261019,261022,1;261020,261119,261124,1","NVDA:223.3157,GLW:167.2869,AVGO:419.4341,QCOM:163.3381"],
-["FCN11508S010","260813",.016058,.85,"260820,260921,260924,1.1;260922,261020,261023,1.1;261021,261120,261125,1.1;261123,261221,261224,1.1","TSM:433.2777,NVDA:225.4123"],
+["FCN11508S001","260805",.0359,.70,"260813,260914,260917,1.05;260915,261012,261015,.95;261013,261112,261117,.85","NVDA:220.0159:165.0119,GLW:158.1905:118.6429,MU:910.8999:683.1749","260921"],
+["FCN11508S004","260807",.023542,.7,"260817,260914,260917,1.15;260915,261014,261019,1.1;261015,261116,261119,1.05;261117,261214,261217,1;261215,270114,270120,.95;270115,270216,270219,.9","NVDA:222.9163:167.1872,GOOG:354.5262:265.8947,AVGO:426.5697:319.9273,LITE:890.4446:667.8335"],
+["FCN11508S006","260807",.037283,.6,"260817,260914,260917,0;260915,261014,261019,1.1;261015,261116,261119,1","TSM:419.8239:327.4626,NVDA:222.9163:173.8747,NBIS:186.7015:145.6272"],
+["FCN11508S008","260810",.019358,.7,"260818,260917,260922,1.05;260918,261019,261022,1.05;261020,261117,261120,1.05;261118,261217,261222,1.05;261218,270119,270122,1.05;270120,270217,270222,1.05","NVDA:219.6686:164.7515,GOOG:353.8782:265.4087,INTC:98.0847:73.5635"],
+["FCN11508S009","260812",.01525,.7,"260819,260921,260924,1;260922,261019,261022,1;261020,261119,261124,1","NVDA:223.3157:167.4868,GLW:167.2869:125.4652,AVGO:419.4341:314.5756,QCOM:163.3381:122.5036"],
+["FCN11508S010","260813",.016058,.85,"260820,260921,260924,1.1;260922,261020,261023,1.1;261021,261120,261125,1.1;261123,261221,261224,1.1","TSM:433.2777:389.9499,NVDA:225.4123:202.8711"],
 ["FCN11508S032","260825",.030392,.60,"260902,261001,261006,1;261002,261102,261105,.9;261103,261201,261204,.8","TSM:416.163,NBIS:218.9781,SNDK:1506.6431","261001"],
 ["FCN11509S001","260901",.030475,.69,"260909,261008,261014,1.05;261009,261109,261113,.95;261110,261208,261211,.85","TSM:415.5358,NBIS:198.8407,SNDK:1555.0587","261009"],
-["FCN11509S006","260902",.025533,.7,"260909,261009,261015,0;261012,261109,261113,.95;261110,261209,261214,.95","TSM:414.018,NBIS:201.6848,BE:211.5512"],
+["FCN11509S006","260902",.025533,.7,"260909,261009,261015,0;261012,261109,261113,.95;261110,261209,261214,.95","TSM:414.018:331.2144,NBIS:201.6848:161.3478,BE:211.5512:169.241"],
 ["FCN11509S012","260908",.0365,.68,"260916,261015,261020,1.05;261016,261116,261119,.95;261117,261215,261218,.85","INTC:103.4191,NBIS:244.2947,BE:275.674"],
-["FCN11509S014","260908",.026008,.7,"260916,261015,261020,1;261016,261116,261119,.95;261117,261215,261218,.9","TSM:438.7653,BE:275.674,INTC:103.4191"],
-["FCN11509S020","260910",.02355,.68,"260917,261019,261022,.95;261020,261117,261120,.95;261118,261217,261222,.95;261218,270119,270122,.95","INTC:100.9792,NBIS:230.2613,BE:263.5057"],
+["FCN11509S014","260908",.026008,.7,"260916,261015,261020,1;261016,261116,261119,.95;261117,261215,261218,.9","TSM:438.7653:329.074,BE:275.674:206.7555,INTC:103.4191:77.5643"],
+["FCN11509S020","260910",.02355,.68,"260917,261019,261022,.95;261020,261117,261120,.95;261118,261217,261222,.95;261218,270119,270122,.95","INTC:100.9792:73.7148,NBIS:230.2613:168.0907,BE:263.5057:192.3592"],
 ["FCN11509S034","260915",.037292,.68,"260923,261022,261027,1;261023,261123,261127,.9;261124,261222,261228,.8","NBIS:211,BE:262,AAOI:96.99"],
-["FCN11509S040","260917",.018875,.68,"260924,261026,261029,.95;261027,261124,261130,.95;261125,261224,261230,.95","INTC:109.1479,SNDK:1604.9149,COHR:298.4105"],
+["FCN11509S040","260917",.018875,.68,"260924,261026,261029,.95;261027,261124,261130,.95;261125,261224,261230,.95","INTC:109.1479:79.678,SNDK:1604.9149:1171.5879,COHR:298.4105:217.8397"],
 ["FCN11509S057","260923",.035133,.65,"261002,261102,261105,1.05;261103,261201,261204,.95;261202,270104,270107,.85","NBIS:231.4574,AAOI:102.6781,MRVL:260.1943"],
-["FCN11510S011","261005",.031875,.68,"261014,261113,261118,1.05;261116,261214,261217,.95;261215,270113,270119,.85","NBIS:235.0075,BE:288.031,ARM:303.4963"],
-["FCN11510S041","261012",.028692,.73,"261021,261120,261125,1.05;261123,261221,261224,.97;261222,270120,270125,.89;270121,270222,270225,.81","ARM:256.9857,COHR:293.0181,NBIS:210.2203"],
-["FCN11510S049","261014",.028842,.75,"261022,261123,261127,1;261124,261221,261224,.9;261222,270121,270126,.8","COHR:271.8059,INTC:99.1051,NBIS:187.5001"]];
+["FCN11510S011","261005",.031875,.68,"261014,261113,261118,1.05;261116,261214,261217,.95;261215,270113,270119,.85","NBIS:235.0075:171.5555,BE:288.031:210.2626,ARM:303.4963:221.5523"],
+["FCN11510S041","261012",.028692,.73,"261021,261120,261125,1.05;261123,261221,261224,.97;261222,270120,270125,.89;270121,270222,270225,.81","ARM:256.9857:197.879,COHR:293.0181:225.6239,NBIS:210.2203:161.8696"],
+["FCN11510S049","261014",.028842,.75,"261022,261123,261127,1;261124,261221,261224,.9;261222,270121,270126,.8","COHR:271.8059:217.4447,INTC:99.1051:79.2841,NBIS:187.5001:150.0001"]];
 const DEF='https://docs.google.com/spreadsheets/d/e/2PACX-1vQRzurcUctoiLZyH9pXL8VwoTdCV65GrtEyUtzXfwaYi7-mIzHhSvXxugz8ZWKySOZRlhQ5A_60OIGD/pub?output=csv';
 const D=s=>new Date(2000+ +s.slice(0,2),+s.slice(2,4)-1,+s.slice(4,6));
-const mk0=([c,tr,r,e,ps,us,ko])=>({c,tr:D(tr),r,e,ko:ko?D(ko):null,ps:ps.split(';').map(x=>{const a=x.split(',');return{s:D(a[0]),e:D(a[1]),p:D(a[2]),k:+a[3]}}),u:us.split(',').map(x=>{const a=x.split(':');return{k:a[0],i:+a[1]}})});
+const mk0=([c,tr,r,e,ps,us,ko])=>({c,tr:D(tr),r,e,ko:ko?D(ko):null,ps:ps.split(';').map(x=>{const a=x.split(',');return{s:D(a[0]),e:D(a[1]),p:D(a[2]),k:+a[3]}}),u:us.split(',').map(x=>{const a=x.split(':');return{k:a[0],i:+a[1],s:a[2]?+a[2]:0}})});
 const mk=a=>{const o=mk0(a);o.fi=Math.max(0,o.ps.findIndex(x=>x.k>0));return o};
 let mem=null;const ld=()=>{try{return JSON.parse(localStorage.getItem('fcnc'))}catch(e){return mem}};
-let S=Object.assign({fav:[],amt:{},ko:{},px:{},pxd:'',url:'',ex:[],hs:{},pv:{}},ld()||{}),PR,TK,tab='home',flt='all',q='';
+let S=Object.assign({fav:[],amt:{},ko:{},px:{},pxd:'',url:'',ex:[],hs:{},pv:{},sr:{}},ld()||{}),PR,TK,tab='home',flt='all',q='';
 const build=()=>{PR=RAW.concat(S.ex).map(mk);TK=new Set(PR.flatMap(p=>p.u.map(u=>u.k)))};build();if((S.url||'').includes('/gviz/')||(/2PACX-1vQRzurcUctoiLZy/.test(S.url||'')&&(S.url||'').includes('gid=')))S.url='';
 const save=()=>{mem=S;try{localStorage.setItem('fcnc',JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s),T0=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
@@ -112,7 +114,7 @@ function home(){const L=mine(),n={wait:0,watch:0,out:0,end:0,all:0,warn:0};L.for
  const e=v.filter(x=>x[0]>=t).sort((a,b)=>a[0]-b[0]).slice(0,8);
  return `<div class="big"><span>我的合約</span><span><b>${L.length}</b> 筆</span></div>${L.length?'':'<div class="card" style="margin-top:10px" onclick="go(\'lib\')">還沒有追蹤合約。到「商品庫」點 ★ 加入你客戶承作的 FCN →</div>'}
  <div class="grid">${cl('保息期','wait',n.wait,'#8A7A5C')}${cl('KO觀察中','watch',n.watch,'#2F5D8A')}${cl('全達KO價','ko',n.all,'#3B7A57')}${cl('觸KI','warn',n.warn,'#C2410C')}${cl('已出場','out',n.out,'#1F6F4A')}${cl('已到期','end',n.end,'#8B8F98')}</div>
- <h2>近期事件（美國日期）</h2>${e.map(x=>`<div class="ev" onclick="openS('${x[1]}')"><b>${fd(x[0])}</b><span>${x[1]}<br><small class="tk">${x[2]}</small></span></div>`).join('')||'<div class="note">沒有未來事件</div>'}`}
+ <h2>近期事件（美國日期）</h2>${e.map(x=>`<div class="ev" onclick="openS('${x[1]}')"><b>${fd(x[0])}</b><span>${x[1]}<br><small class="tk">${x[2]}</small></span></div>`).join('')||'<div class="note">沒有未來事件</div>'}<div class="note" style="text-align:center;margin-top:22px">FCN 羅盤 ・ 設計 王崇禮 FC</div>`}
 function mineT(){const F=[['all','全部'],['wait','保息期'],['watch','觀察中'],['ko','全達KO價'],['warn','觸KI'],['out','已出場'],['end','已到期']];
  const L=mine().filter(p=>{const i=info(p);return flt==='all'||(flt==='ko'?i.all:flt==='warn'?i.warn:i.ph===flt)});
  return `<button class="btn g2" style="margin:0 0 4px" onclick="openR()">📊 區間報酬統計</button><div class="seg">${F.map(f=>`<button class="${flt===f[0]?'on':''}" onclick="flt='${f[0]}';render()">${f[1]}</button>`).join('')}</div>${L.map(card).join('')||'<div class="note">這個狀態下沒有合約</div>'}`}
@@ -122,9 +124,12 @@ function stkT(){const m={};mine().forEach(p=>{if(p.ko||S.ko[p.c])return;const i=
 function libT(){const k=q.toUpperCase();return `<div class="card"><b>新增合約的方式</b><div class="tk" style="line-height:1.8">① 在下方商品庫點 ★（手動，可填投資金額）<br>② 貼上商品 JSON 建檔（由 FC 統一提供）<br>③ 自行建立合約（手動輸入版單數據，取代拍照）</div><button class="btn" onclick="openN()">＋ 自行建立合約</button><button class="btn g2" onclick="$('#jb').style.display='block'">② 貼上商品 JSON</button><div id="jb" style="display:none"><textarea id="js" rows="4" placeholder="貼上商品 JSON"></textarea><button class="btn" onclick="imp()">匯入</button></div><div id="im" class="note"></div></div>
  <input placeholder="搜尋編號或標的（如 NVDA）" value="${q}" oninput="q=this.value;$('#ll').innerHTML=ll()"><div id="ll" style="margin-top:10px">${ll()}</div>`}
 const ll=()=>{const k=q.toUpperCase();return PR.filter(p=>!k||p.c.includes(k)||p.u.some(u=>u.k.includes(k))).map(p=>`<div class="card" onclick="openS('${p.c}')"><div class="row"><div><div class="code">${p.c}</div><div class="tk">${p.u.map(u=>u.k).join('・')}　${fd(p.tr)}</div></div><button class="star ${S.fav.includes(p.c)?'on':''}" onclick="event.stopPropagation();tog('${p.c}')">★</button></div></div>`).join('')||'<div class="note">沒有符合的商品</div>'};
-function imp(){try{const n=(v,t)=>v>t?v/100:v,dd=s=>s.slice(2,4)+s.slice(5,7)+s.slice(8,10);[].concat(JSON.parse($('#js').value)).forEach(o=>{const P=o.periods,u0=o.underlyings[0];S.ex=S.ex.filter(r=>r[0]!==o.code);S.ex.push([o.code,dd(o.tradeDate),n(P[0].couponRate,.5),+(u0.eki/u0.initialPrice).toFixed(3),P.map(x=>[dd(x.obsStart||o.issueDate||o.tradeDate),dd(x.obsEnd),dd(x.payDate),x.koLevel==null?0:n(x.koLevel,3)].join()).join(';'),o.underlyings.map(u=>u.code.replace(/\..*/,'')+':'+u.initialPrice).join(),o.koDate?dd(o.koDate):''])});save();build();$('#js').value='';render();$('#im').textContent='匯入完成'}catch(e){$('#im').textContent='匯入失敗：JSON 格式有誤'}}
-function setT(){return `<h2>股價來源（Google 試算表）</h2><input id="url" value="${S.url||DEF}"><button class="btn" onclick="S.url=$('#url').value.trim();save();pull()">讀取股價</button><textarea id="pt" rows="4" style="margin-top:8px" placeholder="或直接貼上：代號 股價（例 NVDA 228.5）"></textarea><button class="btn g2" onclick="{const t=$('#pt').value;parseH(t);apx(parsePx(t))}">套用貼上內容</button><div id="msg" class="note"></div>
- <div class="note">已有股價 ${[...TK].filter(k=>S.px[k]).length}/${TK.size} 檔。追蹤清單與投資金額只存在這支手機，不會上傳。本工具為內部參考，非官方對帳文件；股價為延遲／收盤參考價，KO、KI 判定一律以發行機構計算代理人結果為準。iPhone：Safari 分享→加入主畫面即可像 App 使用。</div>`}
+function imp(){try{const n=(v,t)=>v>t?v/100:v,dd=s=>s.slice(2,4)+s.slice(5,7)+s.slice(8,10);[].concat(JSON.parse($('#js').value)).forEach(o=>{const P=o.periods,u0=o.underlyings[0];S.ex=S.ex.filter(r=>r[0]!==o.code);S.ex.push([o.code,dd(o.tradeDate),n(P[0].couponRate,.5),+(u0.eki/u0.initialPrice).toFixed(3),P.map(x=>[dd(x.obsStart||o.issueDate||o.tradeDate),dd(x.obsEnd),dd(x.payDate),x.koLevel==null?0:n(x.koLevel,3)].join()).join(';'),o.underlyings.map(u=>u.code.replace(/\..*/,'')+':'+u.initialPrice+(u.strike?':'+u.strike:'')).join(),o.koDate?dd(o.koDate):''])});save();build();$('#js').value='';render();$('#im').textContent='匯入完成'}catch(e){$('#im').textContent='匯入失敗：JSON 格式有誤'}}
+const VER='2026.10.22-2';
+function setT(){const n=[...TK].filter(k=>S.px[k]).length;return `<h2>股價</h2><div class="card" style="margin-top:0"><div class="tk">股價與歷史收盤由內建資料來源自動更新（美股收盤日資料）。</div><div style="margin-top:6px">已有股價 ${n}/${TK.size} 檔 ・ ${S.pxd?'最後更新 '+ltm(S.pxd):'尚未載入'}</div></div><button class="btn" onclick="pull()">立即更新股價</button><div id="msg" class="note"></div>
+ <details style="margin-top:10px"><summary class="tk" style="cursor:pointer">進階：手動貼上股價（網路無法讀取時的備援）</summary><textarea id="pt" rows="4" style="margin-top:8px" placeholder="每行一檔：代號 股價（例 NVDA 228.5）"></textarea><button class="btn g2" onclick="{const t=$('#pt').value;parseH(t);apx(parsePx(t))}">套用貼上內容</button></details>
+ <h2>使用說明</h2><div class="note">追蹤清單、投資金額、自建合約只存在這支手機，不會上傳。本工具為內部參考，非官方對帳文件；股價為延遲／收盤參考價，KO、KI 判定與接股結果一律以發行機構計算代理人及上手交割為準。iPhone：Safari 分享→加入主畫面即可像 App 使用。</div>
+ <h2>關於</h2><div class="note">FCN 羅盤 NAVIGATOR · 南區<br>設計：王崇禮 FC<br>版本 ${VER}</div>`}
 function parsePx(t){const o={};t.split(/\r?\n/).forEach(l=>{const c=l.split(/,|\t| /).map(x=>x.replace(/"/g,'').trim());for(let i=0;i<c.length;i++){const k=c[i].replace(/^.*:/,'').replace(/\.US$/i,'').toUpperCase();if(TK.has(k)){const n=c.slice(i+1).map(x=>parseFloat(x.replace(/[$,]/g,''))).find(x=>x>0);if(n){o[k]=n;break}}}});return o}
 function apx(o){if(!Object.keys(o).length){const p=$('#pxs');p&&(p.textContent='沒有讀到股價');msg('沒有讀到股價');return}S.px=Object.assign(S.px,o);S.pxd=new Date().toISOString();save();render();msg(`已載入 ${Object.keys(o).length} 檔`)}
 const msg=t=>{const e=$('#msg');if(e)e.textContent=t},ltm=s=>{const d=new Date(s),z=n=>String(n).padStart(2,'0');return z(d.getMonth()+1)+'-'+z(d.getDate())+' '+z(d.getHours())+':'+z(d.getMinutes())};
@@ -145,6 +150,7 @@ function openS(c){const p=PR.find(x=>x.c===c),i=info(p),a=S.amt[c]||0,lv=(i.cur|
  $('#sb').innerHTML=`<div class="row"><div class="code" style="font-size:18px">${c}</div><button class="star ${S.fav.includes(c)?'on':''}" onclick="tog('${c}')">★</button></div><div style="margin:6px 0 10px">${chip(p)}</div>${i.lk&&i.lk.ko&&!p.ko?`<div class="note" style="margin:-4px 0 8px">依收盤價歷史推算：最早於 ${fd(i.lk.ko)} 三檔皆已鎖定（記憶式，僅供參考）。實際以發行機構公告為準，若不符請自行用下方按鈕標記。</div>`:''}
  <table><tr><th>標的</th><th>期初</th><th>參考價</th><th>KO價</th><th>下限價</th></tr>${p.u.map(u=>{const x=S.px[u.k];return `<tr><td>${u.k}</td><td>${fm(u.i)}</td><td>${x?fm(x):'-'}</td><td>${fm(u.i*lv)}</td><td>${fm(u.i*p.e)}</td></tr>`}).join('')}</table>
  <h2>連結標的狀態</h2>${ub(p,i)}<div class="note" style="margin-top:4px">「已鎖定」＝保息期後的觀察日中，該標的收盤價曾達當期 KO 價（記憶式，依收盤價推算，僅供參考）。「觸KI」＝目前收盤價在下限價以下；本商品為歐式 KI，只在期末訂價日判定，期間觸及不代表最終觸KI。</div>
+ <h2>接股試算</h2>${asg(p,i)}
  <h2>KO 遞減表（美國日期）</h2><table><tr><th>期</th><th>起算日</th><th>KO</th>${p.u.map(u=>`<th>${u.k}</th>`).join('')}</tr>${p.ps.map((x,n)=>`<tr class="${i.cur===x?'hl':''}"><td>${n+1}</td><td>${n<p.fi?fd(x.s)+'<small>保息期</small>':n===p.fi?fd(x.e)+'<small>單日</small>':fd(x.s)}</td><td>${x.k?(x.k*100).toFixed(0)+'%':'-'}</td>${p.u.map(u=>`<td>${x.k?fm(u.i*x.k):'-'}</td>`).join('')}</tr>`).join('')}</table><div class="note" style="margin-top:6px">${nx?nx+'。':''}${p.fi?`前 ${p.fi} 期為保息期，不觀察 KO；`:''}第${p.fi+1}期只在期末當天比價一次，之後每日比價，${p.ps.some(x=>x.k&&x.k!==p.ps[p.fi].k)?'KO 價逐期遞減':'KO 價固定'}；標色列為目前適用的一期。</div>
  <h2>配息日程（美國日期）</h2>${sched(p,c,a)}
  <div style="margin-top:10px"><div class="tk">投資金額（USD，只存本機）</div><input type="number" inputmode="numeric" value="${a||''}" placeholder="例如 100000" onchange="setAmt('${c}',this.value)"></div>
@@ -186,7 +192,7 @@ function openR(){S.rg=S.rg||{m:'all',off:[]};S.rg.off=S.rg.off||[];const L=mine(
 
 /* ---------- 自行建立合約 ---------- */
 let NF=null;
-const nfNew=()=>({code:'',type:'std',trade:'',s1:'',rate:'',ki:'70',fi:'0',k0:'100',dec:'5',n:'3',e1:'',u:[{k:'',i:''},{k:'',i:''},{k:'',i:''},{k:'',i:''}],rows:[],err:''});
+const nfNew=()=>({code:'',type:'std',trade:'',s1:'',rate:'',ki:'70',sr:'',fi:'0',k0:'100',dec:'5',n:'3',e1:'',u:[{k:'',i:''},{k:'',i:''},{k:'',i:''},{k:'',i:''}],rows:[],err:''});
 const nfLv=f=>{const fi=Math.max(0,parseInt(f.fi)||0),k0=parseFloat(f.k0),dec=f.type==='dec'?(parseFloat(f.dec)||0):0;return j=>j<fi?0:k0-dec*(j-fi)};
 function openN(){NF=NF||nfNew();nfDraw()}
 function nfDraw(){const f=NF,I=(k,ty,ph)=>`<input ${ty?`type="${ty}"`:''} ${ty==='number'?'inputmode="decimal" step="any"':''} value="${f[k]}" placeholder="${ph||''}" oninput="NF.${k}=this.value">`,lv=nfLv(f),fi=Math.max(0,parseInt(f.fi)||0);
@@ -194,7 +200,7 @@ function nfDraw(){const f=NF,I=(k,ty,ph)=>`<input ${ty?`type="${ty}"`:''} ${ty==
  <div class="note" style="margin-top:2px">手動輸入版單數據即可建檔，資料只存在這支手機。日期請填版單上的美國日期。</div>
  <label class="lb">合約編號</label>${I('code','','例 FCN11510S041')}
  <label class="lb">類型</label><div class="seg" style="margin:0"><button class="${f.type==='std'?'on':''}" onclick="NF.type='std';nfDraw()">一般型（KO 價固定）</button><button class="${f.type==='dec'?'on':''}" onclick="NF.type='dec';nfDraw()">遞減型（KO 價逐期遞減）</button></div>
- <div class="fm"><div><label class="lb">交易日</label>${I('trade','date')}</div><div><label class="lb">第1期起算日</label>${I('s1','date')}</div><div><label class="lb">月配息率（%）</label>${I('rate','number','例 2.8692')}</div><div><label class="lb">下限價 KI（期初價 %）</label>${I('ki','number','例 70')}</div></div>
+ <div class="fm"><div><label class="lb">交易日</label>${I('trade','date')}</div><div><label class="lb">第1期起算日</label>${I('s1','date')}</div><div><label class="lb">月配息率（%）</label>${I('rate','number','例 2.8692')}</div><div><label class="lb">下限價 KI（期初價 %）</label>${I('ki','number','例 70')}</div><div class="w2"><label class="lb">履約價（期初價 %，接股用，可先空白）</label>${I('sr','number','例 77')}</div></div>
  <h2>KO 設定</h2><div class="fm"><div><label class="lb">保息期期數</label>${I('fi','number','沒有填 0')}</div><div><label class="lb">首次 KO（%）</label>${I('k0','number','例 105')}</div>${f.type==='dec'?`<div class="w2"><label class="lb">每期遞減（%）</label>${I('dec','number','例 5')}</div>`:''}</div>
  <div class="note" style="margin-top:4px">保息期＝前幾期不觀察 KO（只配息）。KO 價＝首次 KO 起，每期減去遞減幅度。</div>
  <h2>連結標的與期初價</h2>${f.u.map((u,j)=>`<div class="fm"><div><input value="${u.k}" placeholder="代號 例 NVDA" oninput="NF.u[${j}].k=this.value.toUpperCase()"></div><div><input type="number" inputmode="decimal" step="any" value="${u.i}" placeholder="期初價" oninput="NF.u[${j}].i=this.value"></div></div>`).join('')}
@@ -219,9 +225,27 @@ function nfSave(){const f=NF,er=[],code=(f.code||'').trim().toUpperCase(),rate=p
   if(rows.some((r,j)=>j>=fi&&lv(j)<=0))er.push('KO 遞減後出現 0 或負值，請檢查遞減幅度')}
  if(er.length){f.err=er.join('<br>');return nfDraw()}
  const y=s=>s.slice(2,4)+s.slice(5,7)+s.slice(8,10),per=rows.map((r,j)=>{let s=f.s1;if(j){const d=pdt(rows[j-1].e);do d.setDate(d.getDate()+1);while(!bdy(d));s=dk(d)}return[y(s),y(r.e),y(r.p),j<fi?0:+(lv(j)/100).toFixed(4)].join()}).join(';');
- S.ex=S.ex.filter(r=>r[0]!==code);S.ex.push([code,y(f.trade),+(rate/100).toFixed(6),+(ki/100).toFixed(3),per,U.map(u=>u.k.trim().toUpperCase()+':'+(+u.i)).join(),'']);
+ S.ex=S.ex.filter(r=>r[0]!==code);S.ex.push([code,y(f.trade),+(rate/100).toFixed(6),+(ki/100).toFixed(3),per,U.map(u=>u.k.trim().toUpperCase()+':'+(+u.i)+(parseFloat(f.sr)>0?':'+(+(+u.i*parseFloat(f.sr)/100).toFixed(4)):'')).join(),'']);
  if(!S.fav.includes(code))S.fav.push(code);save();build();NF=null;render();pull();openS(code)}
 function rmEx(c){if(!confirm('確定刪除這張合約？（只會刪除這支手機上的資料）'))return;S.ex=S.ex.filter(r=>r[0]!==c);S.fav=S.fav.filter(x=>x!==c);delete S.amt[c];delete S.ko[c];save();build();closeS();render()}
+
+/* ---------- 接股試算 ---------- */
+const kp=(p,u)=>u.s||(S.sr[p.c]?u.i*S.sr[p.c]/100:0);
+function asgCalc(p,u,P){const K=kp(p,u),N=K?Math.floor(P/K):0,R=P-N*K,C=P*p.r*p.ps.length,BE=N?K-C/N:0;return{K,N,R,C,BE}}
+function setSr(c,v){S.sr[c]=+v||0;save();openS(c)}
+function asSim(c,j,v){const p=PR.find(x=>x.c===c),P=S.amt[c]||10000,g=asgCalc(p,p.u[j],P),e=$('#as'+j),x=+v;e.textContent=x>0&&g.N?'損益 '+(g.N*x+g.R+g.C-P>=0?'+':'-')+'$'+fm(Math.abs(g.N*x+g.R+g.C-P)):'—'}
+function asg(p,i){if(i.ph==='out')return '<div class="note" style="margin-top:0">這張合約已 KO 出場，不會接股。</div>';
+ if(!p.u.every(u=>kp(p,u)>0))return `<div class="note" style="margin-top:0">這張合約還沒有履約價資料，請填入履約價（期初價的 %，版單上的轉換價），才能試算接股：</div><input type="number" inputmode="decimal" step="any" placeholder="履約價 %（例 77）" value="${S.sr[p.c]||''}" onchange="setSr('${p.c}',this.value)">`;
+ const P=S.amt[p.c]||10000,rs=p.u.map(u=>S.px[u.k]?S.px[u.k]/u.i:null),ok=rs.every(x=>x!=null),mn=ok?Math.min(...rs):null,wi=ok?rs.indexOf(mn):-1,ord=p.u.map((u,j)=>j).sort((a,b)=>(rs[a]??9)-(rs[b]??9));
+ const kiNow=ok&&mn<p.e;
+ return `<div class="note" style="margin-top:0">到期時若未 KO，且表現最差的標的收盤價低於下限價（KI），就會以「履約價」接該檔股票；否則本金全額以現金退回。${S.amt[p.c]?'':'（尚未填投資金額，以 USD 10,000 試算）'}</div>
+ <div class="note" style="margin:6px 0">${ok?(kiNow?`目前最差標的 <b>${p.u[wi].k}</b> 在下限價以下，若維持到期就會接股。`:`目前最差標的 <b>${p.u[wi].k}</b> 仍在下限價之上，若維持到期是現金全額退回。以下為「若接到該檔」的試算。`):'尚無完整股價，以下為「若接到該檔」的試算。'}</div>`+
+ ord.map(j=>{const u=p.u[j],g=asgCalc(p,u,P),x=S.px[u.k];return `<div class="us"><div class="row"><b>${u.k}</b><span>${j===wi?`<span class="tag" style="--c:#C2410C">目前表現最差</span>`:''}</span></div>
+ <div class="row"><span class="tk">履約價</span><b>$${fm(g.K)}</b></div><div class="row"><span class="tk">接股股數</span><b>${fm(g.N)} 股</b></div><div class="row"><span class="tk">餘款現金（不足 1 股）</span><b>$${fm(g.R)}</b></div><div class="row"><span class="tk">累計配息現金（全期）</span><b>$${fm(g.C)}</b></div>
+ <div class="row"><span class="tk">含息損益兩平價</span><b style="color:var(--red)">$${fm(g.BE)}</b></div>
+ ${x?`<div class="row"><span class="tk">現價 $${fm(x)}</span><span class="tk">${g.BE>x?`尚需上漲 <b>${(Math.abs(g.BE/x-1)*100).toFixed(1)}%</b> 回本`:`現價高於兩平價，尚有 <b>${(Math.abs(g.BE/x-1)*100).toFixed(1)}%</b> 緩衝`}</span></div>`:''}
+ <div class="row"><span class="tk">假設賣出價</span><span><input type="number" inputmode="decimal" step="any" style="width:90px;padding:4px 6px;font-size:13px" placeholder="${x?fm(x):''}" oninput="asSim('${p.c}',${j},this.value)"> <b id="as${j}">—</b></span></div></div>`}).join('')+
+ `<div class="note">含息損益兩平價＝履約價 −（累計配息 ÷ 接股股數），代表接股後股價回到這個價格，連同已領配息，整體損益為零。以美元計，未計手續費、匯率與稅；接股股數、餘款以上手交割為準。</div>`}
 function render(){const v={home,mine:mineT,stk:stkT,lib:libT,set:setT};$('#m').innerHTML=v[tab]();{const o=$('.seg .on');o&&o.scrollIntoView&&o.scrollIntoView({inline:'center',block:'nearest'})}
  $('#pxs').textContent=S.pxd?'股價 '+ltm(S.pxd)+' 更新':'尚未載入股價';
  $('#nav').innerHTML=[['home','🧭','首頁'],['mine','📋','我的合約'],['stk','📊','個股'],['lib','🗂','商品庫'],['set','⚙️','設定']].map(x=>`<button class="${tab===x[0]?'on':''}" onclick="go('${x[0]}')"><i>${x[1]}</i>${x[2]}</button>`).join('')}
