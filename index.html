@@ -78,7 +78,7 @@ const D=s=>new Date(2000+ +s.slice(0,2),+s.slice(2,4)-1,+s.slice(4,6));
 const mk0=([c,tr,r,e,ps,us,ko,meta])=>({c,tr:D(tr),r,e,ko:ko?D(ko):null,uf:(meta&&meta.u)||10000,ps:ps.split(';').map(x=>{const a=x.split(',');return{s:D(a[0]),e:D(a[1]),p:D(a[2]),k:+a[3]}}),u:us.split(',').map(x=>{const a=x.split(':');return{k:a[0],i:+a[1],s:a[2]?+a[2]:0}})});
 const mk=a=>{const o=mk0(a);o.fi=Math.max(0,o.ps.findIndex(x=>x.k>0));return o};
 let mem=null;const ld=()=>{try{return JSON.parse(localStorage.getItem('fcnc'))}catch(e){return mem}};
-let S=Object.assign({fav:[],amt:{},ko:{},px:{},pxd:'',url:'',ex:[],hs:{},pv:{},sr:{},grp:[],hide:[],cg:'all',agree:'',seen:'',sort:'asc',ord:[]},ld()||{}),PR,TK,ALL,lv='',tab='home',flt='all',q='';
+let S=Object.assign({fav:[],amt:{},ko:{},px:{},pxd:'',url:'',ex:[],hs:{},pv:{},sr:{},grp:[],hide:[],cg:'all',agree:'',seen:'',sort:'asc',ord:[]},ld()||{}),PR,TK,ALL,lv='',STALE=null,tab='home',flt='all',q='';
 const build=()=>{ALL=RAW.concat(S.ex).map(mk);PR=ALL.filter(p=>!S.hide.includes(p.c));TK=new Set(PR.flatMap(p=>p.u.map(u=>u.k)))};build();if((S.url||'').includes('/gviz/')||(/2PACX-1vQRzurcUctoiLZy/.test(S.url||'')&&(S.url||'').includes('gid=')))S.url='';
 const save=()=>{mem=S;try{localStorage.setItem('fcnc',JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s),T0=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
@@ -94,7 +94,7 @@ function parseH(t){const R=t.split(/\r?\n/).map(l=>l.split(',').map(x=>x.replace
  R.forEach(r=>{const k=(r[0]||'').replace(/^.*:/,'').replace(/\.US$/i,'').toUpperCase();if(!TK.has(k))return;const o={};for(let j=off;j<r.length;j++){const c=parseFloat(r[j]);if(ds[j]&&c>0)o[ds[j]]=c}hs[k]=o;
   let q=off===3?parseFloat(r[2]):NaN;
   if(!(q>0)){const p=parseFloat(r[1]),ks=Object.keys(o).sort().reverse();if(ks.length)q=(p>0&&Math.abs(p-o[ks[0]])/p<0.0005&&ks.length>1)?o[ks[1]]:o[ks[0]]}
-  if(q>0)pv[k]=q});S.hs=hs;S.pv=pv;save()}
+  if(q>0)pv[k]=q});S.hs=hs;S.pv=pv;{const mk=ds.filter(Boolean).sort().pop();STALE=null;if(mk){const nd=new Date(mk+'T00:00:00'),n=Math.round((td-nd)/864e5);if(n>4)STALE={d:mk.slice(5).replace('-','/'),n}}}save()}
 function info(p){const t=T0(),f=p.ps[p.fi].e,L=p.ps[p.ps.length-1];let ph='watch',cur=null;
  if(p.ko||S.ko[p.c])ph='out';else if(t>L.p)ph='end';else if(t<f)ph='wait';else if(t>L.e)ph='fin';
  const lk=ph==='watch'||ph==='out'||ph==='fin'||ph==='end'?lock(p):null;
@@ -102,7 +102,7 @@ function info(p){const t=T0(),f=p.ps[p.fi].e,L=p.ps[p.ps.length-1];let ph='watch
  let rs=null,all=false,warn=false;
  if(p.u.every(u=>S.px[u.k])){rs=p.u.map(u=>S.px[u.k]/u.i);warn=(ph==='watch'||ph==='wait')&&rs.some(x=>x<p.e);all=!!cur&&rs.every(x=>x>=cur.k)}
  return{ph,cur,rs,all,warn,lk}}
-const PH={wait:['保息期','#8A7A5C'],watch:['KO觀察中','#2F5D8A'],fin:['已評價','#9A6B00'],out:['已出場','#3B7A57'],end:['已到期','#8B8F98']};
+const PH={wait:['保息期','#8A7A5C'],watch:['KO觀察中','#2F5D8A'],fin:['已評價/到期','#9A6B00'],out:['已KO出場','#3B7A57'],end:['已評價/到期','#9A6B00']};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ckey=c=>{const m=/^FCN(\d{3})(\d{2})S(\d+)/.exec(c);return m?(+m[1])*1e8+(+m[2])*1e5+ +m[3]:2e12};
 const byCode=(a,b)=>ckey(a.c)-ckey(b.c)||(a.c<b.c?-1:a.c>b.c?1:0);
@@ -144,19 +144,21 @@ function home(){const L=mine('all'),n={wait:0,watch:0,fin:0,out:0,end:0,all:0,wa
  const cl=(t,k,v,c)=>`<div class="cell" style="--c:${c}" onclick="go('mine','${k}')"><small>${t}</small><b>${v}</b></div>`;
  const t=T0(),v=[];L.forEach(p=>{if(p.ko||S.ko[p.c])return;const l=p.ps[p.ps.length-1];v.push([p.ps[p.fi].e,p.c,'保息期結束・KO 開始觀察']);p.ps.forEach((x,i)=>v.push([x.p,p.c,`第${i+1}期配息給付`]));v.push([l.e,p.c,'期末訂價日'])});
  const e=v.filter(x=>x[0]>=t).sort((a,b)=>a[0]-b[0]).slice(0,8);
- return `<div class="big"><span>我的合約</span><span><b>${L.length}</b> 筆</span></div>${L.length?'':'<div class="card" style="margin-top:10px" onclick="go(\'lib\')">還沒有追蹤合約。到「商品庫」點 ★ 加入你客戶承作的 FCN →</div>'}
- <div class="grid">${cl('保息期','wait',n.wait,'#8A7A5C')}${cl('KO觀察中','watch',n.watch,'#2F5D8A')}${cl('全達KO價','ko',n.all,'#3B7A57')}${cl('觸KI','warn',n.warn,'#C2410C')}${cl('已評價','fin',n.fin,'#9A6B00')}${cl('已出場','out',n.out,'#1F6F4A')}${cl('已到期','end',n.end,'#8B8F98')}</div>
+ return `${STALE?`<div class="card" style="border-color:#C2410C;color:#C2410C;margin-top:0"><b>⚠️ 股價資料已 ${STALE.n} 天沒有更新</b>（最新只到 ${STALE.d}）。KO／KI 判斷與最終評價日價格可能不準，請通知管理員檢查試算表的自動更新。</div>`:''}<div class="big"><span>我的合約</span><span><b>${L.length}</b> 筆</span></div>${L.length?'':'<div class="card" style="margin-top:10px" onclick="go(\'lib\')">還沒有追蹤合約。到「商品庫」點 ★ 加入你客戶承作的 FCN →</div>'}
+ <div class="grid">${cl('保息期','wait',n.wait,'#8A7A5C')}${cl('KO觀察中','watch',n.watch,'#2F5D8A')}${cl('觸KI','warn',n.warn,'#C2410C')}${cl('已KO出場','out',n.out,'#1F6F4A')}${cl('已評價/到期','fe',n.fin+n.end,'#9A6B00')}</div>
  <h2>近期事件（美國日期）</h2>${e.map(x=>`<div class="ev" onclick="openS('${x[1]}')"><b>${fd(x[0])}</b><span>${x[1]}<br><small class="tk">${x[2]}</small></span></div>`).join('')||'<div class="note">沒有未來事件</div>'}<div class="note" style="text-align:center;margin-top:22px">FCN 羅盤 ・ 設計 王崇禮 FC</div>`}
-function visList(){return srt(mine().filter(p=>{const i=info(p);return flt==='all'||(flt==='ko'?i.all:flt==='warn'?i.warn:i.ph===flt)}))}
+const LBL={wait:'保息期',watch:'KO觀察中',warn:'觸KI',out:'已KO出場',fe:'已評價/到期',ko:'全達KO價',fin:'已評價/到期',end:'已評價/到期'};
+function fltOK(p,i){const ph=i.ph;switch(flt){case'all':return true;case'act':return ph==='wait'||ph==='watch';case'done':return ph==='out'||ph==='fin'||ph==='end';case'fe':return ph==='fin'||ph==='end';case'warn':return i.warn;case'ko':return i.all;default:return ph===flt}}
+function visList(){return srt(mine().filter(p=>fltOK(p,info(p))))}
 function setSort(m){if(m==='custom'&&!S.ord.length)S.ord=[...PR].sort(byCode).map(p=>p.c);S.sort=m;save();render()}
 function mv(c,d){const V=visList(),k=V.findIndex(p=>p.c===c),nb=V[k+d];if(!nb)return;S.ord=S.ord.filter(x=>PR.some(p=>p.c===x));[...PR].sort(byCode).forEach(p=>{if(!S.ord.includes(p.c))S.ord.push(p.c)});const x=S.ord.indexOf(c),y=S.ord.indexOf(nb.c);[S.ord[x],S.ord[y]]=[S.ord[y],S.ord[x]];save();render()}
-function mineT(){const F=[['all','全部'],['wait','保息期'],['watch','觀察中'],['ko','全達KO價'],['warn','觸KI'],['fin','已評價'],['out','已出場'],['end','已到期']];
+function mineT(){const F=[['all','全部'],['act','有效合約'],['done','已出場/到期']];
  const L=visList(),A=mine().reduce((s,p)=>s+amt(p),0);
  return `<div class="seg" style="margin-bottom:6px"><button class="${S.cg==='all'?'on':''}" onclick="setCg('all')">全部</button>${GRP().map(g=>`<button class="${S.cg===g.id?'on':''}" onclick="setCg('${g.id}')">${esc(g.n)}</button>`).join('')}<button onclick="gNew()">＋群組</button><button onclick="openG()">管理</button></div>
  <div class="fm" style="margin:0"><button class="btn g2" style="margin:0 0 6px" onclick="openR()">📊 區間報酬統計</button><button class="btn g2" style="margin:0 0 6px" onclick="openA()">🧮 接股試算</button></div>
  ${S.cg!=='all'?`<div class="note" style="margin:0 0 8px">${esc(scopeName())}：${mine().length} 張合約${A?' ・ 本金合計 $'+fm(A):''}　<a href="#" onclick="openP();return false" style="color:var(--red)">＋從商品庫加入合約</a></div>`:''}
  <div class="seg" style="margin-bottom:6px"><button class="${S.sort==='asc'?'on':''}" onclick="setSort('asc')">編號 舊→新</button><button class="${S.sort==='desc'?'on':''}" onclick="setSort('desc')">編號 新→舊</button><button class="${S.sort==='custom'?'on':''}" onclick="setSort('custom')">自訂順序</button></div>
- <div class="seg">${F.map(f=>`<button class="${flt===f[0]?'on':''}" onclick="flt='${f[0]}';render()">${f[1]}</button>`).join('')}</div>${L.map(card).join('')||'<div class="note">這個狀態下沒有合約</div>'}`}
+ <div class="seg">${F.map(f=>`<button class="${flt===f[0]?'on':''}" onclick="flt='${f[0]}';render()">${f[1]}</button>`).join('')}${F.some(f=>f[0]===flt)?'':`<button class="on" onclick="flt='all';render()">${LBL[flt]||flt} ✕</button>`}</div>${L.map(card).join('')||'<div class="note">這個狀態下沒有合約</div>'}`}
 function stkT(){const m={};mine('all').forEach(p=>{if(p.ko||S.ko[p.c])return;const i=info(p);p.u.forEach(u=>{const x=S.px[u.k],a=amtOf('all',p.c);(m[u.k]=m[u.k]||{k:u.k,n:0,a:0,x,w:9,c:'',ki:0});const o=m[u.k];o.n++;o.a+=a;if(x&&x<u.i*p.e)o.ki++;if(x){const d=x/u.i/p.e-1;if(d<o.w){o.w=d;o.c=p.c}}})});
  const L=Object.values(m).sort((a,b)=>a.w-b.w);
  return `<div class="note" style="margin:0 0 10px">依「離下限價最近」排序。某檔股票大跌時，這裡一眼看出哪些合約受影響。</div>${L.map(o=>`<div class="card"><div class="row"><div><div class="code">${o.k}</div><div class="tk">${o.n} 張合約${o.a?' ・ 曝險 $'+fm(o.a):''}</div>${o.ki?`<span class="tag" style="--c:#C2410C;margin:3px 0 0">觸KI ×${o.ki}</span>`:o.x?'<span class="tag" style="--c:#8B8F98;margin:3px 0 0">無碰觸</span>':''}</div><div style="text-align:right"><b>${o.x?'$'+fm(o.x):'-'}</b>${o.x&&S.pv[o.k]?`<div class="tk">${pc(o.x/S.pv[o.k]-1)}</div>`:''}${o.w<9?`<div class="tk">離下限價最近 ${pc(o.w)}<br>${o.c}</div>`:''}</div></div></div>`).join('')||'<div class="note">還沒有追蹤中的合約</div>'}`}
@@ -169,7 +171,7 @@ function hideP(c){if(!confirm('從這支手機的商品庫移除 '+c+'？之後�
 function unhide(c){S.hide=S.hide.filter(x=>x!==c);save();build();render()}
 function hideRest(){const kp=new Set(GRP().flatMap(g=>g.id==='0'?S.fav:Object.keys(g.m))),L=PR.filter(p=>!S.ex.some(r=>r[0]===p.c)&&!kp.has(p.c));if(!L.length){alert('沒有可隱藏的商品。');return}if(!confirm('將從商品庫隱藏 '+L.length+' 檔尚未加入「我的合約」的商品（不會影響已加入的合約，之後可還原）。'))return;L.forEach(p=>S.hide.push(p.c));save();build();render()}
 function imp(){try{const n=(v,t)=>v>t?v/100:v,dd=s=>s.slice(2,4)+s.slice(5,7)+s.slice(8,10);[].concat(JSON.parse($('#js').value)).forEach(o=>{const P=o.periods,u0=o.underlyings[0];S.ex=S.ex.filter(r=>r[0]!==o.code);S.ex.push([o.code,dd(o.tradeDate),n(P[0].couponRate,.5),+(u0.eki/u0.initialPrice).toFixed(3),P.map(x=>[dd(x.obsStart||o.issueDate||o.tradeDate),dd(x.obsEnd),dd(x.payDate),x.koLevel==null?0:n(x.koLevel,3)].join()).join(';'),o.underlyings.map(u=>u.code.replace(/\..*/,'')+':'+u.initialPrice+(u.strike?':'+u.strike:'')).join(),o.koDate?dd(o.koDate):''])});save();build();$('#js').value='';render();$('#im').textContent='匯入完成'}catch(e){$('#im').textContent='匯入失敗：JSON 格式有誤'}}
-const VER='2026.10.26';
+const VER='2026.11.11';
 function setT(){const n=[...TK].filter(k=>S.px[k]).length;return `<h2>股價</h2><div class="card" style="margin-top:0"><div class="tk">股價與歷史收盤由內建資料來源自動更新（美股收盤日資料）。</div><div style="margin-top:6px">已有股價 ${n}/${TK.size} 檔 ・ ${S.pxd?'最後更新 '+ltm(S.pxd):'尚未載入'}</div></div><button class="btn" onclick="pull()">立即更新股價</button><div id="msg" class="note"></div>
  <details style="margin-top:10px"><summary class="tk" style="cursor:pointer">進階：手動貼上股價（網路無法讀取時的備援）</summary><textarea id="pt" rows="4" style="margin-top:8px" placeholder="每行一檔：代號 股價（例 NVDA 228.5）"></textarea><button class="btn g2" onclick="{const t=$('#pt').value;parseH(t);apx(parsePx(t))}">套用貼上內容</button></details>
  <h2>備份與換機</h2><div class="note" style="margin-top:0">追蹤清單、投資金額、客戶群組、自建合約只存在這支手機。換手機前請先產生備份碼，在新手機貼回即可。<b>備份碼含投資金額與群組名稱，請只傳給自己（例如 LINE 的我的筆記），不要貼到群組。</b></div>
@@ -251,13 +253,15 @@ function nfDraw(){const f=NF,I=(k,ty,ph)=>`<input ${ty?`type="${ty}"`:''} ${ty==
  <h2>KO 設定</h2><div class="fm"><div><label class="lb">保息期間（月）</label>${I('fi','number','照版單填，例 1')}</div><div><label class="lb">首次 KO（%）</label>${I('k0','number','例 105')}</div>${f.type==='dec'?`<div class="w2"><label class="lb">每期遞減（%）</label>${I('dec','number','例 5')}</div>`:''}</div>
  <div class="note" style="margin-top:4px">保息期間＝首次 KO 比價之前的月數，直接照版單的「保息期間(月)」填。例：版單寫 1 個月，就填 1（第 1 期期末就是第一次 KO 比價日）；寫 3 個月就填 3（前 2 期只配息，第 3 期期末才首次比價）。KO 價＝首次 KO 起，每期減去遞減幅度。</div>
  <h2>連結標的與期初價</h2>${f.u.map((u,j)=>`<div class="fm"><div><input value="${u.k}" placeholder="代號 例 NVDA" oninput="NF.u[${j}].k=this.value.toUpperCase()"></div><div><input type="number" inputmode="decimal" step="any" value="${u.i}" placeholder="期初價" oninput="NF.u[${j}].i=this.value"></div></div>`).join('')}
- <h2>各期日期</h2><div class="fm"><div><label class="lb">總期數</label>${I('n','number','例 4')}</div><div><label class="lb">第1期觀察迄日</label>${I('e1','date')}</div></div>
+ <h2>各期日期</h2><div class="fm"><div><label class="lb">總期數</label>${I('n','number','例 4')}</div><div><label class="lb">首次 KO 觀察日（版單上第一次比價日）</label>${I('e1','date')}</div></div>
  <button class="btn g2" onclick="nfGen()">自動產生各期日期</button>
+ <div class="note" style="margin-top:4px">以「首次 KO 觀察日」為第 N 期期末（N＝保息期間），往前推算保息期各期、往後推算其餘各期，同一天遇假日順延。給付日預設為評價日後 3 個營業日，請對照版單修改。</div>
  ${f.rows.length?`<table class="rt" style="margin-top:8px"><tr><th>期</th><th>觀察迄日</th><th>給付日</th><th>KO</th></tr>${f.rows.map((r,j)=>`<tr><td>${j+1}</td><td><input type="date" value="${r.e}" oninput="NF.rows[${j}].e=this.value"></td><td><input type="date" value="${r.p}" oninput="NF.rows[${j}].p=this.value"></td><td>${j<fi?'保息':(lv(j)>0?(+lv(j).toFixed(2))+'%':'?')}</td></tr>`).join('')}</table><div class="note">自動產生＝每月同一天（遇假日順延到下一個美股交易日），給付日為觀察迄日後第 3 個美國營業日。這只是推算，請對照版單逐期修正。</div>`:''}
  ${f.err?`<div class="err">${f.err}</div>`:''}
  <button class="btn" onclick="nfSave()">${f.edit?'儲存修改':'儲存合約'}</button>${f.edit?`<button class="btn g2" onclick="NF=null;closeS()">取消編輯</button>`:`<button class="btn g2" onclick="closeS()">先關閉（內容會保留）</button>`}`;$('#sheet').classList.add('on')}
-function nfGen(){const f=NF,n=Math.max(1,Math.min(12,parseInt(f.n)||0)),e1=pdt(f.e1||'');if(!f.e1||isNaN(e1)){f.err='請先填「第1期觀察迄日」';return nfDraw()}
- f.rows=[];for(let j=0;j<n;j++){const d=new Date(e1.getFullYear(),e1.getMonth()+j,e1.getDate());if(j)while(!bdy(d))d.setDate(d.getDate()+1);f.rows.push({e:dk(d),p:dk(wd(d,3))})}f.err='';nfDraw()}
+function nfGen(){const f=NF,n=Math.max(1,Math.min(12,parseInt(f.n)||0)),fi=Math.max(0,(parseInt(f.fi)||1)-1),e1=pdt(f.e1||'');if(!f.e1||isNaN(e1)){f.err='請先填「首次 KO 觀察日」';return nfDraw()}
+ if(fi>=n){f.err='保息期間（月）不能大於總期數';return nfDraw()}
+ f.rows=[];for(let j=0;j<n;j++){const off=j-fi,last=new Date(e1.getFullYear(),e1.getMonth()+off+1,0).getDate(),d=new Date(e1.getFullYear(),e1.getMonth()+off,Math.min(e1.getDate(),last));if(off)while(!bdy(d))d.setDate(d.getDate()+1);f.rows.push({e:dk(d),p:dk(wd(d,3))})}f.err='';nfDraw()}
 function nfSave(){const f=NF,er=[],code=(f.code||'').trim().toUpperCase(),rate=parseFloat(f.rate),ki=parseFloat(f.ki),k0=parseFloat(f.k0),fi=Math.max(0,(parseInt(f.fi)||1)-1),lv=nfLv(f),rows=f.rows,U=f.u.filter(u=>u.k.trim()||u.i);
  if(!/^[A-Z0-9]{4,}$/.test(code))er.push('請填合約編號（例 FCN11510S041）');
  if(RAW.some(r=>r[0]===code))er.push('商品庫已有這個編號，不需要重複建立：'+code);if(f.edit&&code!==f.edit&&S.ex.some(r=>r[0]===code))er.push('已有另一張合約使用這個編號：'+code);
@@ -280,7 +284,7 @@ function nfSave(){const f=NF,er=[],code=(f.code||'').trim().toUpperCase(),rate=p
  if(!S.fav.includes(code)&&!f.edit)S.fav.push(code);save();build();NF=null;render();pull();openS(code)}
 const iso6=s=>'20'+s.slice(0,2)+'-'+s.slice(2,4)+'-'+s.slice(4,6);
 function nfFrom(r){const P=r[4].split(';').map(x=>x.split(',')),ks=P.map(x=>+x[3]),fi=Math.max(0,ks.findIndex(k=>k>0)),k0=ks[fi]||1,nx=ks[fi+1],dec=nx&&nx<k0?+((k0-nx)*100).toFixed(4):0,us=r[5].split(',').map(x=>x.split(':')),u0=us[0],sr=u0&&u0[2]?+((+u0[2])/(+u0[1])*100).toFixed(2):'',f=nfNew();
- Object.assign(f,{edit:r[0],code:r[0],type:dec>0?'dec':'std',trade:iso6(r[1]),s1:iso6(P[0][0]),rate:String(+(r[2]*100).toFixed(6)),ki:String(+(r[3]*100).toFixed(3)),sr:sr===''?'':String(sr),fi:String(fi+1),k0:String(+(k0*100).toFixed(4)),dec:dec?String(dec):'5',n:String(P.length),e1:iso6(P[0][1]),rows:P.map(x=>({e:iso6(x[1]),p:iso6(x[2])})),u:[0,1,2,3].map(j=>us[j]?{k:us[j][0],i:us[j][1]}:{k:'',i:''})});return f}
+ Object.assign(f,{edit:r[0],code:r[0],type:dec>0?'dec':'std',trade:iso6(r[1]),s1:iso6(P[0][0]),rate:String(+(r[2]*100).toFixed(6)),ki:String(+(r[3]*100).toFixed(3)),sr:sr===''?'':String(sr),fi:String(fi+1),k0:String(+(k0*100).toFixed(4)),dec:dec?String(dec):'5',n:String(P.length),e1:iso6(P[fi][1]),rows:P.map(x=>({e:iso6(x[1]),p:iso6(x[2])})),u:[0,1,2,3].map(j=>us[j]?{k:us[j][0],i:us[j][1]}:{k:'',i:''})});return f}
 function nfEdit(c){const r=S.ex.find(x=>x[0]===c);if(!r)return;NF=nfFrom(r);nfDraw()}
 function rmEx(c){if(!confirm('確定刪除這張合約？（只會刪除這支手機上的資料）'))return;S.ex=S.ex.filter(r=>r[0]!==c);S.fav=S.fav.filter(x=>x!==c);S.grp.forEach(g=>delete g.m[c]);delete S.amt[c];delete S.ko[c];save();build();closeS();render()}
 
@@ -298,6 +302,7 @@ function asg(p,i,P){if(i.ph==='out')return '<div class="note" style="margin-top:
  const rs=p.u.map(u=>S.px[u.k]?S.px[u.k]/u.i:null),ok=rs.every(x=>x!=null),mn=ok?Math.min(...rs):null,wi=ok?rs.indexOf(mn):-1,ord=p.u.map((u,j)=>j).sort((a,b)=>(rs[a]??9)-(rs[b]??9)),kiNow=ok&&mn<p.e;
  return `<div class="note" style="margin-top:0">到期時若未 KO，且表現最差的標的收盤價低於下限價（KI），就會以「履約價」接該檔股票；否則本金全額以現金退回。</div>
  ${st&&st.st==='assign'?sbox(p,i):`<div class="note" style="margin:6px 0">${ok?(kiNow?`目前最差標的 <b>${p.u[wi].k}</b> 在下限價以下，若維持到期就會接股。`:`目前最差標的 <b>${p.u[wi].k}</b> 仍在下限價之上，若維持到期是現金全額退回。以下為「若接到該檔」的試算。`):'尚無完整股價，以下為「若接到該檔」的試算。'}</div>`}
+${st&&(st.st==='pending'||st.st==='ko?')?sbox(p,i):''}
  <div class="note" style="margin:6px 0">以 <b>${units}</b> 單位計算（每單位面額 ${fm(p.uf)}，計入本金 ${fm(Pu)}${P-Pu>0.5?`；不足 1 單位的 ${fm(P-Pu)} 不計入`:''}）。</div>`+
  ord.filter(j=>!(st&&st.st==='assign')||j===st.j).map(j=>{const u=p.u[j],x=xfOf(p,u),cp=S.px[u.k],g=asgCalc(p,u,P,x),fin=fpx(p,u)!=null;return `<div class="us"><div class="row"><b>${u.k}</b><span>${j===wi?`<span class="tag" style="--c:#C2410C">目前表現最差</span>`:''}</span></div>
  <div class="row"><span class="tk">履約價</span><b>$${fm(g.K)}</b></div><div class="row"><span class="tk">每單位接股（無條件捨去）</span><b>${fm(g.per)} 股</b></div><div class="row"><span class="tk">合計接股股數</span><b>${fm(g.N)} 股</b></div><div class="row"><span class="tk">畸零股折算現金（${fin?'依最終評價日收盤價 $'+fm(x):cp?'暫以現價估':'暫以履約價估'}）</span><b>$${fm(g.R)}</b></div><div class="row"><span class="tk">累計配息現金（全期）</span><b>$${fm(g.C)}</b></div>
@@ -319,6 +324,7 @@ function openP(keep){if(S.cg==='all'){return}const sc=keep?$('#sb').scrollTop:0,
 
 /* ---------- 更新公告 ---------- */
 const CHANGELOG=[
+ {v:'2026.11.11',d:'2026/11/11',t:['我的合約的篩選精簡為三種：全部、有效合約、已出場/到期；從首頁點進來時會多顯示一個目前篩選條件，按 ✕ 可取消','首頁整理為：保息期、KO觀察中、觸KI、已KO出場、已評價/到期（取消「全達KO價」）；「已出場」改稱「已KO出場」','自行建立合約：「自動產生各期日期」修正，保息期間 2 個月以上時，改以「首次 KO 觀察日」往前推算保息期各期','新增：股價資料超過 4 天沒有更新時，首頁與標題列會顯示警示','接股試算：最終評價日已過、但試算表還沒有當天收盤價時，會明確提示']},
  {v:'2026.10.26',d:'2026/10/26',t:['最終評價日過後，合約自動標示「已評價」，並註明「已確定接股 ○○」或「已確定現金退回」（卡片、詳細頁都看得到）','接股試算：最終評價日已過時，畸零股現金改用「最終評價日當天的收盤價」計算，不再用最新股價；已確定接股的合約只列出會接的那一檔','修正商品庫：點選下方合約的 ★ 後，畫面不再自動跳回最上面','首頁新增「已評價」數量，我的合約可用「已評價」篩選']},
  {v:'2026.10.25',d:'2026/10/25',t:['自建合約儲存後可以「編輯」了（合約詳細頁最下方「編輯這張合約」）','「保息期間（月）」改成直接照版單填：版單寫 1 個月就填 1（第 1 期期末就是第一次 KO 比價日）','客戶群組：各群組的本金分開記憶，在某群組下不會看到其他群組的金額；「全部」檢視不顯示本金，區間報酬統計需先選擇客戶群組','我的合約可依編號排序（舊→新、新→舊），或自訂順序（▲▼ 移動）；排序會一併寫進備份碼','合約卡片與詳細頁新增：年化配息率、最終評價日（含剩餘天數）、首次 KO 觀察日、到期日','接股試算修正：股數改為「每單位面額」各自無條件捨去，畸零股依最終價格折算現金']},
  {v:'2026.10.24',d:'2026/10/24',t:['接股試算算法修正：改依每單位面額計算，畸零股以最終價格折現金']},
@@ -360,7 +366,7 @@ function openA(c){if(c!==undefined&&typeof c==='string'){AS.c=c;AS.P=''}const L=
  ${p?`<label class="lb">本金（USD）</label><input type="number" inputmode="numeric" id="asp" value="${AS.P||(mixed()?0:amtOf(S.cg,p.c))||''}" placeholder="例如 100000" oninput="AS.P=this.value" onchange="openA()"><div style="margin-top:10px">${asg(p,i,asP(p.c))}</div>`:''}
  <button class="btn" onclick="closeS()">關閉</button>`;$('#sheet').classList.add('on')}
 function render(){if(S.cg!=='all'&&!GRP().some(g=>g.id===S.cg))S.cg='all';const v={home,mine:mineT,stk:stkT,lib:libT,set:setT};$('#m').innerHTML=v[tab]();document.querySelectorAll('.seg').forEach(s=>{const o=s.querySelector('.on');if(o)s.scrollLeft=o.offsetLeft-s.clientWidth/2+o.clientWidth/2});
- $('#pxs').textContent=S.pxd?'股價 '+ltm(S.pxd)+' 更新':'尚未載入股價';
+ $('#pxs').textContent=STALE?'⚠️ 股價資料停在 '+STALE.d+'（'+STALE.n+' 天沒更新）':S.pxd?'股價 '+ltm(S.pxd)+' 更新':'尚未載入股價';
  $('#nav').innerHTML=[['home','🧭','首頁'],['mine','📋','我的合約'],['stk','📊','個股'],['lib','🗂','商品庫'],['set','⚙️','設定']].map(x=>`<button class="${tab===x[0]?'on':''}" onclick="go('${x[0]}')"><i>${x[1]}</i>${x[2]}</button>`).join('')}
 render();pull();chkAgree();
 </script></body></html>
